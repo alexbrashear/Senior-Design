@@ -1,0 +1,295 @@
+
+% Many thanks to Andrew West for writing most of this file
+% Main LaTeX file for CIS400/401 Project Proposal Specification
+%
+% Once built and in PDF form this document outlines the format of a
+% project proposal. However, in raw (.tex) form, we also try to
+% comment on some basic LaTeX technique. This is not intended to be a
+% LaTeX tutorial, instead just (1) a use-case thereof, and (2) a
+% template for your own writing.
+
+% Ordinarily we'd begin by specifying some broad document properties
+% like font-size, page-size, margins, etc. -- We have done this (and
+% much more) for you by creating a 'style file', which the
+% 'documentclass' command references.
+\documentclass{sig-alternate}
+ 
+% These 'usepackage' commands are a way of importing additional LaTeX
+% styles and formattings that aren't part of the 'standard library'
+\usepackage{mdwlist}
+\usepackage{url}
+
+\begin{document} 
+
+% We setup the parameters to our title header before 'making' it. Note
+% that your proposals should have actual titles, not the generic one
+% we have here.
+\title{Platform for Evaluating Real-Time Resource Management Algorithms for Network Function Virtualization}
+\subtitle{Dept. of CIS - Senior Design 2014-2015\thanks{Advisor: Insup Lee (lee@cis.upenn.edu).}~\thanks{ Do not list your advisors amongst the authors as that may cause Google Scholar to add this work to their list of publications. Your advisor must also sign a hard-copy of your proposal.}}
+\numberofauthors{2}
+\author{
+\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
+\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
+
+\date{}
+\maketitle
+
+% Next we write out our abstract -- generally a two paragraph maximum,
+% executive summary of the motivation and contributions of the work.
+\begin{abstract}
+  \textit{Network Functions Virtualization (NFV) is an approach to implementing network infrastructure that emerged in 2012. NFV aims to address the inflexibility of classical network hardware by leveraging virtualization technology to consolidate network equipment onto industry standard servers. To date, several reports have demonstrated the feasibility of virtualizing network functions. In order for NFV to succeed in practice, virtualized network systems must account for the unique real-time requirements of network functions when approaching such problems as resource management. To that end, Professor Linh Phan and her research group at Penn have developed algorithms to manage resources in the context of NFV. One use case of interest is to provide network services that meet functional requirements, which are typically end-to-end latency requirements. In this project, we propose to design, implement, and evaluate a testing platform that can simulate real-time scheduling of virtual machines as well as functional and nonfunctional services in order to evaluate the effectiveness of the algorithm. We will collect metrics to understand, validate, and later improve the real-time scheduling algorithms. On the hardware side, we will deploy the platform on four 32-core computers with network switches connecting them. The testing platform will consist of an orchestration layer that uses their algorithms to manage resources and a cluster of computers that provide computing and networking resources. This system will enable the evaluation of the algorithms and aid in the development of future algorithms for efficiently implementing network functions.}
+\end{abstract}
+
+% Then we proceed into the body of the report itself. The effect of
+% the 'section' command is obvious, but also notice 'label'. Its good
+% practice to label every (sub)-section, graph, equation etc. -- this
+% gives us a way to dynamically reference it later in the text via the
+% 'ref' command, e.g., instead of writing `Section 1', you can write
+% `Section~\ref{sec:intro}', which is useful if the section number
+% changes.
+\section{Introduction}
+\label{sec:intro}
+	A vast number of hardware equipments (known as middleboxes) provide important services for the network such as mediating data packets being sent to and from one network node to another. These critical services filter or manipulate packets in order to improve efficiency and maintain security. For instance, a firewall is one such example of a middlebox that filters out malicious or irrelevant traffic. However, network hardware poses a growing problem because it is difficult to install and maintain. Furthermore, middleboxes burden enterprises with financial and administrative cost [white paper]. In the same way that cloud computing freed service providers from the management of physical hardware, Network Functions Virtualization (NFV) has been proposed as a solution to move network hardware functions to the cloud, where hardware services will be managed by software. Through NFV, it is much easier to install, manage, and upgrade hardware services [white paper].
+
+
+	Now, suppose a service provider wants to virtualize hardware network functions in order to take advantages of NFV such as economic savings, automation, and scalability. To satisfy its customer, the service provider has to finish processing requests with a reasonable latency performance. If a customer imposes a certain latency requirement for their service request, how can the service provider schedule services in the cloud in order to meet this criteria? Although research has shown that it can be beneficial to move network hardware to the cloud, few studies have been conducted to suggest ways to optimally manage resources for network functions in the cloud in real-time systems. 
+	
+Recently, Dr. Phan at the University of Pennsylvania has developed an algorithm that can schedule and manage NFV services in the cloud in real-time, meaning services will be effectively scheduled on virtual machines per each new customer requirement. The algorithm’s main goal is to create effective configuration of virtual machines in the cloud and schedule services in a way that minimizes latency in order the meet the latency requirement. At a high level, the algorithm uses a combination of linear programming and real time analysis to determine the assignment of services to virtual machines in the cloud. In middleboxes, a data packet coming from a customer will be processed by the first service, and then the output of that will be sent to the second service to be processed, then the third, and so on. When scheduling services in the cloud, it is optimal to place services within close proximity to one another in order to minimize the latency that will be incurred with the distance that packets have to travel from service to another, after being processed. Another important consideration that the algorithm looks at is effective ways to schedule CPU and network resources on the cloud. Both allocations of CPU and network resources occur in real time based on the latency requirement imposed by customers. The algorithm tries to ensure that the end-to-end latency, or the total latency acquired from processing a data packet through the chain of services from the virtual machines, is minimized.
+
+Currently, no analysis platform exists to evaluate effective resource management algorithms for virtualized network functions on the cloud. As our research project, we propose a testing platform that can be used to analyze the ability of network service scheduling algorithms to meet customer latency requirements. Specifically, we propose to create software that simulate a service provider in the cloud handling customer requests. Through careful design of this software, it can be used to test and prove the correctness of real-time scheduling algorithms. On a broader standpoint, this software will ultimately help cloud service provider make real-time latency guarantees to customers. The specifics of this system is described below.
+
+
+% The header of this document might have been a little intimidatating
+% to beginners. Notice once you are in the body of the document,
+% however, LaTeX commands are minimal and 'normal text' is frequent.
+\section{Related Work}
+\label{sec:related_work}
+Perhaps the most important section of your proposal is \textit{related
+  work}. Here you demonstrate that you have read and understand what
+others in the field have done. This ensures you (1) know the
+state-of-the-art, (2) are not re-doing others work, and (3) you know
+the performance levels you must achieve to make a contribution. As you
+discuss each related work, make note of how each has advanced the
+field. Keep in mind that this section should not read like a regular
+research paper you write for other classes. In other words, you should
+not just discuss related work for the sake of having a related work
+section; rather, tell a story about the state-of-the-art of the field
+and where your work fits in.
+
+% Here we see our first citations. It's just a simple command, the
+% body of which is the keyword-label assigned to resources over in the
+% *.bib file
+This section should have in-line citations to your bibliography
+(really all sections should have citations, but we expect them to be
+most dense in this section). We are going to require that your
+proposal has at least $6$ references. Fortunately, \LaTeX{} makes
+citations easy. Your TA has had no difficulty, as the work of Ivanov
+\textit{et al.}~\cite{ivanov14} demonstrates. Need help with \LaTeX{}?
+Be sure to check out~\cite{latex_wikibook} and~\cite{ctan_pdf}, two
+helpful on-line resources.
+
+What defines a good resource? Wikipedia is \textbf{NOT} a good
+resource. We would like to see references from academic
+journals/conferences (ACM, IEEE, etc.). We realize not everyone is
+doing pure research and for students with `implementation' projects
+such sources may be rare. No matter the case, your sources need to be
+reputable.
+
+Let us return to your factorization proposal. You should put out the
+earliest related work; na\"{i}ve methods like trial divison and the
+Sieve of Eratosthenes, but state they are of no modern relevance. Then
+discuss modern methods like the Quadratic Sieve and General Number
+Field Sieve. Note the humongous time and memory bounds of these
+algorithms. But wait! You are going to propose a better way $\ldots$
+
+\section{Project Proposal}
+\label{sec:project_proposal}
+Now is the time to introduce your proposed project in all of its
+glory. Admittedly, this is not the easiest since you probably have not
+done much actual research yet. Even so, setting and realizing
+realistic research goals is an important skill. Begin by summarizing
+what you are going to do and the expected benefit it will bring.
+
+\subsection{Anticipated Approach}
+\label{subsec:approach}
+Having summarized \textit{what} you are going to do, its time to
+describe \textit{how} you plan to do it. Our factorization example
+does not work so well here (it is likely impossible to realize) -- so
+let us suppose you are going to create a service that takes a
+cell-phone picture of a building and returns via text-message, the
+name of that building\footnote{Do not use this idea -- someone did it
+  in a previous year.}.
+
+In this case you might want to talk about establishing a server to
+receive pictures via MMS. Once the picture is received, you will run
+an edge extraction algorithm over it. Then, similarity between the
+submitted picture and those stored (and tagged) in a MySQL database
+will be computing using algorithm $XYZ$. Finally, the tag of the most
+similar image will be returned to the user. Do not bore the reader
+with trivial details, but give them an overview; a block-flow diagram
+would prove helpful (and is required).
+
+\subsection{Technical Challenges}
+\label{subsec:tech_challenges}
+In this subsection note where you anticipate having \underline{novel}
+difficulty. Maybe you have never setup a MySQL database or even used
+SQL before at all -- yes, that is a challenge -- but not one readers
+care about. More novel would be the fact that many buildings on Penn's
+campus look similar and your classifier may be inaccurate in such
+instances. The purpose of this section is two-fold: 1) you will think
+about which parts of your project would require the most time and
+effort and 2) you will convince the reader that this is a project
+worth undertaking.
+
+\subsection{Evaluation Criteria}
+\label{subsec:eval_criteria}
+Suppose you have implemented your approach and it is functioning. Now
+how are you going to convince readers your approach is better than
+what exists? In the factorization example, you could just compare
+run-times between algorithms run on the same input. The image
+recognition example might use a percentage of accurate
+classifications. Other fields may have established testing benchmarks.
+
+No matter the case, you need to prove you have contributed to the
+field. This will be easier for some than others. In particular, those
+with `sensory' projects involving visual or sonic elements need to
+think this point through -- objective measures are always better than
+subjective ones.
+
+\section{Research Timeline}
+\label{sec:research_timeline}
+Finally, we would like you to speculate about the pace of your
+research progress. This section need not be lengthy, we would just
+like you to specify some milestones so we can gauge your progress
+during our intermediate interviews. Let us follow through with our
+image recognition example:
+
+% The 'itemize' environment shown here, and its friend 'enumerate'
+% (shown below), are used to create indented\bulleted\outline style
+% lists.
+\begin{itemize*}
+	\item {\sc already completed}: Preliminary reading. Began implementation of image-recognition algorithm.\vspace{3pt}
+	\item {\sc prior-to thanksgiving} : Photograph buildings for DB. Make algorithm more efficient, tune parameters.\vspace{3pt}
+	\item {\sc prior-to christmas} : Create server-MMS interface. Expand tagged DB collection.\vspace{3pt}
+	\item {\sc completion tasks} : Verify implementation is bug-free. Conduct accuracy testing. Complete write-up.\vspace{3pt}
+	\item {\sc if there's time} : Investigate image pre-processing techniques to improve accuracy.
+\end{itemize*}
+
+% We next move onto the bibliography.
+\bibliographystyle{plain} % Please do not change the bib-style
+\bibliography{prop_spec}  % Just the *.BIB filename
+
+% Here is a dirty hack. We insert so much vertical space that the
+% appendices, which want to begin in the left colunm underneath
+% "references", are pushed over to the right-hand column. If we looked
+% hard enough, there is probably a command to do exactly this (and
+% wouldn't need tweaked after edits).
+\vspace{175pt}
+
+% We then use appendices to share some additional information with
+% you, though you won't need appendices in your own proposal.
+\appendix
+\section{Other Specifics}
+\label{app:other_specifics}
+Your proposal need not have appendices like this section and the next
+but we still have info to share:
+
+% The usage of 'enumerate' (similar to 'itemize') we talked about
+% above
+
+% You may also notice we have many 'vspace' commands lying
+% around. These create 'vertical space' and are a way to force LaTeX
+% to cooperate, sometimes. Don't get too involved with using them
+% initially, though, because adding or deleting a single line of task
+% can dramatically change how LaTeX chooses to format, page, and space
+% the document
+\begin{enumerate*}
+\item {\sc proposal length}: We require that your proposal be 4--5
+  pages in length, bibliography included. Be careful, \LaTeX{} and our
+  style-file in particular are \textit{extremely} space efficient. An
+  9-page MS-Word document could easily become a 5-page \LaTeX{}
+  one.\vspace{5pt}
+
+\item {\sc plagarism}: \textbf{DO NOT} plagarize. If you are caught,
+  you will fail the class (\textit{i.e.}, not graduate), or worse.
+
+\end{enumerate*}
+
+\section{\LaTeX{} Examples}
+\label{app:latex_examples}
+
+% This paragraph makes use of dynamic references. Remember how we've
+% been 'label'-ing everything; sections, etc? Using 'ref' we can
+% reference them. Add a new figure/section at the beginning? This
+% technique automatically re-numbers when you build, so you don't have
+% to make static changes.
+At this point, the proposal specification is complete. From here on
+out, we are just going to show off some commonly used \LaTeX{}
+technique. Be sure to look at the `code behind' and see
+Tab.~\ref{tab:some_table}, Eqn.~\ref{eqn:some_equation} and
+Fig.~\ref{fig:some_graph} for the output! Keep in mind that the
+appendix is usually not a good place for your figures. Place them
+where you need them and remember to refer to them in the body of your
+text; otherwise, the reader will keep reading and will miss them!
+
+% Math is obviously one of LaTeX's strengths. Math can be typeset
+% in-line, or off-set in equation 'environments' like this. You'll
+% need to look up symbols on an as-needed basis, but I'll assure you
+% -- they are ALL there.
+\begin{equation}
+M(p) = \int^\infty_0 (1+\alpha x)^{-\gamma}x^{p-1}dx
+\label{eqn:some_equation}
+\end{equation}
+
+% We next encounter tables and figures (images). Big things like these
+% are known as 'floats' in LaTeX because their position is not
+% fixed. Notice that '[htb!]' follows the start of each
+% environment. We are telling LaTeX that we'd like to put the
+% table/fig 'h' - HERE, precisely where it follows in the
+% narrative. If LaTeX determines it doesn't look good here, 't' tells
+% LaTeX we'd like it at the top of this column, and if that doesn't
+% work, use 'b', the bottom of the column. Other options are
+% available. LaTeX shifts floats around to ensure images don't end up
+% on page/column boundaries, which would result in a waste of space
+% for text.
+
+% We insert a table into the document. Notice the '| c | c | c |'
+% argument provided to the tabular environment. This says we want
+% three columns, all with center-alignment, with vertical bars between
+% them. In the body of argument, an ampersand '&' separates cells, and
+% a double forward-slash '\\' is used to create new lines. Otherwise,
+% commands should be self explanatory.
+\begin{table}[htb!]
+	\begin{center}
+  \begin{tabular}{| c | c | c |}
+    \hline
+    \textbf{User Type} & \textbf{Cleanup\%} & \textbf{Honesty\%} \\ \hline
+    Good & 90-100\% & 100\% \\ \hline
+    Purely Malicous & 0-10\% & 0\% \\ \hline
+		Malicious Provider & 0-10\% & 100\% \\ \hline
+		Feedback Malicous & 90-100\% & 0\% \\ \hline
+		Disguised Malicous & 50-100\% & 50-100\% \\ \hline
+		Sybil Attacker & 0-10\% & Irrelevant \\ \hline
+  \end{tabular}
+	\caption{Example Table}
+  \label{tab:some_table}
+	\vspace{-10pt}
+	\end{center}
+\end{table}
+
+% We insert a graph/figure into the document. This is a pretty
+% straightforward process once you get the image into a file format
+% that LaTeX plays nice with. Then we just scale it as
+% a % of the column width.
+\begin{figure}[htb!]
+	\begin{center}
+		\includegraphics[width=0.75\linewidth]{some_graph}
+	\end{center}
+	\vspace{-12pt}
+	\caption{Example Figure/Graph}
+	\label{fig:some_graph}
+\end{figure}
+
+\end{document} 
+
