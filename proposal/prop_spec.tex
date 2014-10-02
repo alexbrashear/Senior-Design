@@ -25,7 +25,6 @@
 % we have here.
 \title{Platform for Evaluating Real-Time Resource Management Algorithms for Network Function Virtualization}
 \subtitle{Dept. of CIS - Senior Design 2014-2015\thanks{Advisor: Insup Lee (lee@cis.upenn.edu).}~\thanks{ Do not list your advisors amongst the authors as that may cause Google Scholar to add this work to their list of publications. Your advisor must also sign a hard-copy of your proposal.}}
-<<<<<<< HEAD
 \author{
 \alignauthor Alex Brashear, Razzi Abuissa, Dong Young Kim, Alex Lyons\\
 \vspace{.4cm}
@@ -34,15 +33,6 @@ Philadelphia, PA \\
 \vspace{.4cm}
 \texttt{\{brashear, rabuissa, kido, allyons\}@seas.upenn.edu}
 }
-=======
-\numberofauthors{4}
-\author{
-\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
-\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
->>>>>>> cd47c040a21d41a209aef173e87325ccf0873f73
-
 \date{}
 \maketitle
 
@@ -122,8 +112,8 @@ A related design challenge is achieving repeatable test results so that algorith
 \label{subsec:eval_criteria}
 We consider several evaluation metrics. First, we will use output from the analytics component of the platform to understand and validate the performance of the real-time scheduling algorithm. Specifically, we compare end-to-end latency produced from the chain of services scheduled in multicore computers against the algorithm’s predicted latency. We plan to set an appropriate significance level in order to set a benchmark for acceptable latency performance. Since the algorithm schedules services in real-time based on the service’s functional requirements (in latency), we will validate how the algorithm performs given a wide range of functional requirements.
 
-	Second, when building this platform, it is important to consider how much overhead our system adds to the providing services. If our system’s design plays a significant factor in increasing end-to-end latency, then the software and design of our platform must be optimized to minimize unnecessary and significant overhead. In the next few weeks of designing our platform, we plan to define an acceptable measure of overhead. One obvious constraint to this measure is that the added overhead should not increase the end-to-end latency of the services to more than the latency requirement imposed by clients. 
-	
+	Second, when building this platform, it is important to consider how much overhead our system adds to the providing services. If our system’s design plays a significant factor in increasing end-to-end latency, then the software and design of our platform must be optimized to minimize unnecessary and significant overhead. In the next few weeks of designing our platform, we plan to define an acceptable measure of overhead. One obvious constraint to this measure is that the added overhead should not increase the end-to-end latency of the services to more than the latency requirement imposed by clients.
+
 	Lastly, we evaluate our platform based on its scalability. As mentioned above, we plan on building this testing platform on 4 multi-core computers that will simulate servers. When talking about the scalability of this system, we need to ensure that the system is able to steadily and efficiently handle large incoming traffic (substantial packets/second) as well as deal with strict functional requirements on the system.
 
 
