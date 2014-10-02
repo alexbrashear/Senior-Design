@@ -41,9 +41,9 @@ Philadelphia, PA \\
 % Next we write out our abstract -- generally a two paragraph maximum,
 % executive summary of the motivation and contributions of the work.
 \begin{abstract}
-  \textit{Network Functions Virtualization (NFV) is an approach to implementing network infrastructure that emerged in 2012. NFV aims to address the inflexibility of classical network hardware by leveraging virtualization technology to consolidate network equipment onto industry standard servers. To date, several reports have demonstrated the feasibility of virtualizing network functions. (cite) In order for NFV to succeed in practice, it is desirable for virtualized network systems to be able to meet real-time deadlines. To that end, Professor Linh Phan and her research group at Penn have developed algorithms to manage computing and network resources to implement virtualized network functions given real-time constraints.
+  \textit{Network Functions Virtualization (NFV) is an approach to implementing network infrastructure that emerged in 2012. NFV aims to address the inflexibility of classical network hardware by leveraging virtualization technology to consolidate network equipment onto industry standard servers. To date, several reports have demonstrated the feasibility of virtualizing network functions. (cite) In order for NFV to succeed in practice, it is desirable for virtualized network systems to be able to meet real-time deadlines. To that end, Professor Linh Phan and her research group at Penn have developed algorithms to manage computing and network resources to implement virtualized network functions given real-time constraints.}
 
-One application of real-time NFV is to provide network services that meet end-to-end latency requirements. In this project, we propose to design and implement a testing platform that simulates a service provider that, given an algorithm for research management, provides services meeting real-time constraints. In doing so, the platform can evaluate the effectiveness of the resource management algorithm. We will perform trials to collect metrics to analyze and eventually improve the real-time scheduling algorithms. The testing platform will consist of an orchestration layer and a cluster of computers that provide computing and networking resources. This system will enable the evaluation of the algorithms and aid in the development of future algorithms for implementing network functions subject to time constraints.}
+  \textit{One application of real-time NFV is to provide network services that meet end-to-end latency requirements. In this project, we propose to design and implement a testing platform that simulates a service provider that, given an algorithm for research management, provides services meeting real-time constraints. In doing so, the platform can evaluate the effectiveness of the resource management algorithm. We will perform trials to collect metrics to analyze and eventually improve the real-time scheduling algorithms. The testing platform will consist of an orchestration layer and a cluster of computers that provide computing and networking resources. This system will enable the evaluation of the algorithms and aid in the development of future algorithms for implementing network functions subject to time constraints.}
 \end{abstract}
 
 % Then we proceed into the body of the report itself. The effect of
@@ -55,7 +55,7 @@ One application of real-time NFV is to provide network services that meet end-to
 % changes.
 \section{Introduction}
 \label{sec:intro}
-A variety of network appliances provide important services by mediating data packets sent on the network. Such appliances filter or manipulate packets in order to improve the efficiency and security of the network. For instance, a firewall is one such example of a middlebox that filters out malicious or irrelevant traffic. However, network hardware poses a growing problem because it is difficult to install and maintain. Furthermore, middleboxes burden enterprises with financial and administrative cost \cite{white_paper}. In the same way that cloud computing freed service providers from the management of physical hardware, Network Functions Virtualization (NFV) has been proposed as a solution to move network hardware functions to the cloud, where hardware services can be managed by software. NFV can make it easier for network administrators to install, manage, and upgrade networking devices \cite{white_paper}.
+A variety of network appliances provide important services by mediating data packets sent on the network. Such appliances filter or manipulate packets in order to improve the efficiency and security of the network. A firewall is an example of a middlebox that filters out malicious or irrelevant traffic. However, network hardware poses a growing problem because it is difficult to install and maintain. Furthermore, middleboxes burden enterprises with financial and administrative cost \cite{white_paper}. In the same way that cloud computing freed service providers from the management of physical hardware, Network Functions Virtualization (NFV) has been proposed as a solution to move network hardware functions to the cloud, where hardware services can be managed by software. NFV can make it easier for network administrators to install, manage, and upgrade networking devices \cite{white_paper}.
 
 Suppose a service provider wants to virtualize hardware network functions in order to benefit from NFV in terms of economic savings, automation, and scalability. One desirable feature such a service provider could offer is the guarantee that customer data will be processed and returned within an acceptable time frame. The service provider then has the challenge of managing its resources to meet this criteria. Although research has shown that it can be beneficial to move network hardware to the cloud, few studies have been conducted to suggest ways to manage resources for network functions in such a way that they meet real-time constraints.
 
@@ -65,6 +65,18 @@ Currently, no analysis platform exists to evaluate effective resource management
 % The header of this document might have been a little intimidatating
 % to beginners. Notice once you are in the body of the document,
 % however, LaTeX commands are minimal and 'normal text' is frequent.
+
+
+\begin{figure*}[htb!]
+  \begin{center}
+    \includegraphics[width=16cm]{service_provider}
+  \end{center}
+  \vspace{-12pt}
+  \caption{Example Figure/Graph}
+  \label{fig:some_graph}
+\end{figure*}
+
+
 \section{Related Work}
 \label{sec:related_work}
 Although research into Network Functions Virtualization is a recent phenomenon, substantial progress in the field has led to numerous technological innovations. The following research examples serve as a collective proof-of-concept, demonstrating that, among other things, network functions can be virtualized and algorithms can be designed to minimize latency. Furthermore, they suggest that NFV is not only technologically feasible but economically viable as well.
@@ -80,6 +92,7 @@ Design and Implementation of a Consolidated Middlebox Architecture \cite{Sekar:2
 Additional research such as Theory of Scheduling and Routing \cite{DBLP:conf/fsttcs/BampisKLLS13} will help us understand the theoretical limits and state-of-the-art of scheduling.
 
 This project, which will draw heavily upon the aforementioned research and technology as groundwork, gives unique consideration to performance guarantees in real-time systems. Current NFV resource-management algorithms seek to reduce average latency across all requests, but they cannot guarantee that a specific task will complete given a time constraint with minimal variance. This project establishes a platform for evaluating algorithms which seek compliance with various specific performance constraints.
+
 
 \section{Project Proposal}
 \label{sec:project_proposal}
@@ -101,6 +114,8 @@ The analytics component will track of how the system is performing over time and
 The hardware will be provided by Professor Phan's research group as four 32-core computers and network switches to connect them.
 
 Trials will start with orchestration layer running and only the base hypervisor installed on the computing hardware. Simulated customers will begin to make requests with information about the accepted services, the acceptable latency (e.g. 20 ms), and the amount of data they will send (e.g. 100 mb at 1 mb / second). The request handler will accept or reject the requests. Once a request has been accepted, the customer will begin sending data and performance analytics will be collected by the service provider. When a trial is over, a report of the algorithm's performance over that trial will be generated.
+
+
 
 \subsection{Technical Challenges}
 \label{subsec:tech_challenges}
@@ -177,14 +192,7 @@ As time permits, we will build an analytics dashboard for monitoring performance
 % straightforward process once you get the image into a file format
 % that LaTeX plays nice with. Then we just scale it as
 % a % of the column width.
-\begin{figure}[htb!]
-  \begin{center}
-    \includegraphics[width=16cm]{service_provider}
-  \end{center}
-  \vspace{-12pt}
-  \caption{Example Figure/Graph}
-  \label{fig:some_graph}
-\end{figure}
+
 
 \begin{figure}[htb!]
   \begin{center}
