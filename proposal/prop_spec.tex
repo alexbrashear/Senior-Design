@@ -26,8 +26,9 @@
 % we have here.
 \title{Platform for Evaluating Real-Time Resource Management Algorithms for Network Function Virtualization}
 \subtitle{Dept. of CIS - Senior Design 2014-2015\thanks{Advisor: Insup Lee (lee@cis.upenn.edu).}~\thanks{ Do not list your advisors amongst the authors as that may cause Google Scholar to add this work to their list of publications. Your advisor must also sign a hard-copy of your proposal.}}
-\numberofauthors{2}
+\numberofauthors{4}
 \author{
+\alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
 \alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
 \alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA
 \alignauthor Alex Brashear \\ \email{brashear@seas.upenn.edu} \\ Univ. of Pennsylvania \\ Philadelphia, PA}
@@ -65,116 +66,68 @@ Currently, no analysis platform exists to evaluate effective resource management
 % however, LaTeX commands are minimal and 'normal text' is frequent.
 \section{Related Work}
 \label{sec:related_work}
-Perhaps the most important section of your proposal is \textit{related
-  work}. Here you demonstrate that you have read and understand what
-others in the field have done. This ensures you (1) know the
-state-of-the-art, (2) are not re-doing others work, and (3) you know
-the performance levels you must achieve to make a contribution. As you
-discuss each related work, make note of how each has advanced the
-field. Keep in mind that this section should not read like a regular
-research paper you write for other classes. In other words, you should
-not just discuss related work for the sake of having a related work
-section; rather, tell a story about the state-of-the-art of the field
-and where your work fits in.
+Although research into Network Functions Virtualization is a recent phenomenon, substantial progress in the field has led to numerous technological innovations. The following research examples serve as a collective “proof-of-concept,” demonstrating that, among other things, network functions can be virtualized and algorithms can be designed to minimize latency. Furthermore, they suggest that NFV is not only technologically feasible but economically viable as well.
 
-% Here we see our first citations. It's just a simple command, the
-% body of which is the keyword-label assigned to resources over in the
-% *.bib file
-This section should have in-line citations to your bibliography
-(really all sections should have citations, but we expect them to be
-most dense in this section). We are going to require that your
-proposal has at least $6$ references. Fortunately, \LaTeX{} makes
-citations easy. Your TA has had no difficulty, as the work of Ivanov
-\textit{et al.}~\cite{ivanov14} demonstrates. Need help with \LaTeX{}?
-Be sure to check out~\cite{latex_wikibook} and~\cite{ctan_pdf}, two
-helpful on-line resources.
+A white paper published by the European Telecommunications Standards Institute defined Network Functions Virtualization and outlined the benefits and challenges associated [1]. This paper covers many practical aspects of NFV and is a key motivation for research in this area, and especially useful to our research because it clearly defines the goals of NFV in which we can use to evaluate our system and measure our progress.
 
-What defines a good resource? Wikipedia is \textbf{NOT} a good
-resource. We would like to see references from academic
-journals/conferences (ACM, IEEE, etc.). We realize not everyone is
-doing pure research and for students with `implementation' projects
-such sources may be rare. No matter the case, your sources need to be
-reputable.
+Making Middleboxes Someone Else’s Problem: Network Processing as a Cloud Service [2] is one of the earliest practical studies of moving middlebox processing to the cloud. Like the white paper, this publication gives strong motivation for the field by surveying the current state of network enterprises. This research highlights several design choices of the system they implemented which successfully mitigates potential weaknesses of NFV. This study touches upon scaling middleboxes in response to load, but does so on a small scale and does not impose time constraints on the network functions.
 
-Let us return to your factorization proposal. You should put out the
-earliest related work; na\"{i}ve methods like trial divison and the
-Sieve of Eratosthenes, but state they are of no modern relevance. Then
-discuss modern methods like the Quadratic Sieve and General Number
-Field Sieve. Note the humongous time and memory bounds of these
-algorithms. But wait! You are going to propose a better way $\ldots$
+One specific technology that is relevant to our research is ClickOS and the Art of Network Function Virtualization [3], which deals specifically with high-performance virtualization of network functions. The strategies they used to optimize hypervisors and operating systems for network processing will be useful for building a performant system, and the fact that their patches to software such as Xen are open source means that we can use components of their work for high-performance NFV.
+
+Design and Implementation of a Consolidated Middlebox Architecture [4] will also be invaluable for reference because it deals specifically with deploying multiple virtualized middleboxes, which is exactly what we will be dealing with. The general techniques employed here will be useful, but they still do not impose time constraints and are more interested in aggregate statistics than specific reliability and performance quotas.
+
+Additional research such as Theory of Scheduling and Routing [5] and Real-Time Multi-Core Virtual Machine Scheduling in Xen [6] will help us understand the theoretical limits and state-of-the-art of scheduling.
+
+This project, which will draw heavily upon the aforementioned research and technology as groundwork, gives unique consideration to performance guarantees in real-time systems. Current NFV resource-management algorithms seek to reduce average latency across all requests, but they cannot guarantee that a specific task will complete given a time constraint with minimal variance. This project establishes a platform for evaluating algorithms which seek compliance with various specific performance constraints.
+
 
 \section{Project Proposal}
 \label{sec:project_proposal}
-Now is the time to introduce your proposed project in all of its
-glory. Admittedly, this is not the easiest since you probably have not
-done much actual research yet. Even so, setting and realizing
-realistic research goals is an important skill. Begin by summarizing
-what you are going to do and the expected benefit it will bring.
+Our group will develop software to configure a cluster of computers to act as a network functions service provider. Real-time resource management algorithms can then be evaluated by using them to manage the provider’s computing and networking resources and simulating customers interacting with the provider. By measuring the success rate of the service provider to handle traffic within latency constraints, we will be able to analyze and improve the algorithms.
 
 \subsection{Anticipated Approach}
 \label{subsec:approach}
-Having summarized \textit{what} you are going to do, its time to
-describe \textit{how} you plan to do it. Our factorization example
-does not work so well here (it is likely impossible to realize) -- so
-let us suppose you are going to create a service that takes a
-cell-phone picture of a building and returns via text-message, the
-name of that building\footnote{Do not use this idea -- someone did it
-  in a previous year.}.
+The service provider that we will be building to test the algorithms will consist of two major components: an orchestration layer and the hardware that provides computing and networking resources. The orchestration layer consists of a state manager, request handler, algorithm solver, and analytics monitor. The hardware consists of high-volume servers which host virtual machines and network switches which allow the machines to send and receive data.
 
-In this case you might want to talk about establishing a server to
-receive pictures via MMS. Once the picture is received, you will run
-an edge extraction algorithm over it. Then, similarity between the
-submitted picture and those stored (and tagged) in a MySQL database
-will be computing using algorithm $XYZ$. Finally, the tag of the most
-similar image will be returned to the user. Do not bore the reader
-with trivial details, but give them an overview; a block-flow diagram
-would prove helpful (and is required).
+The state manager will keep track of the computing fleet in terms of the software configuration and activity on each computer. When changes need to be made to the fleet, the state manager will put them into effect by creating, modifying or destroying virtual computers.
+
+The request handler will connect to the outside network and handle requests for services that specify functionality and performance requirements of the services. Depending on the service provider’s capacity and usage, requests for services can either be accepted or rejected.
+
+The algorithm solver will solve for resource management strategies given the customer requirements and the state of the fleet. The algorithm used by the solver can be switched out to evaluate different resource management algorithms across separate trials. The algorithm solver communicates with the state manager to enact the strategies it produces.
+
+The analytics component will track of how the system is performing over time and if it is meeting the requirements imposed by the customers. Once a trial has finished, the analytics component will quantitatively evaluate the resource management algorithms for review by the researchers.
+
+The hardware will be provided by Professor Phan’s research group as four 32-core computers and network switches to connect them.
+
+Trials will start with orchestration layer running and only the base hypervisor installed on the computing hardware. Simulated customers will begin to make requests with information about the accepted services, the acceptable latency (e.g. 20 ms), and the amount of data they will send (e.g. 100 mb at 1 mb / second). The request handler will accept or reject the requests. Once a request has been accepted, the customer will begin sending data and performance analytics will be collected by the service provider. When a trial is over, a report of the algorithm’s performance over that trial will be generated.
+
 
 \subsection{Technical Challenges}
 \label{subsec:tech_challenges}
-In this subsection note where you anticipate having \underline{novel}
-difficulty. Maybe you have never setup a MySQL database or even used
-SQL before at all -- yes, that is a challenge -- but not one readers
-care about. More novel would be the fact that many buildings on Penn's
-campus look similar and your classifier may be inaccurate in such
-instances. The purpose of this section is two-fold: 1) you will think
-about which parts of your project would require the most time and
-effort and 2) you will convince the reader that this is a project
-worth undertaking.
+The nature of Network Function Virtualization requires the deliberate integration of complex hardware and software. This design complicates latency constraint handling because CPU resources and network resources must be managed simultaneously. A major design challenge in lieu of meeting real-time end-to-end latency guarantees is optimizing and measuring both processor- and network-sourced latencies. In order to achieve minimal end-to-end latency, our design will need to a) minimize the overhead of critical functions, and b) keep non-critical functions off of the critical path.
+
+A related design challenge is achieving repeatable test results so that algorithms may be analyzed and compared to one another. In order to accomplish this, the system must also provide consistent latency. Our design also presents additional challenges including maintaining overall system reliability and recovering from failures in either hardware (such as internal network switches) or software (such as virtual machine) components.
 
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
-Suppose you have implemented your approach and it is functioning. Now
-how are you going to convince readers your approach is better than
-what exists? In the factorization example, you could just compare
-run-times between algorithms run on the same input. The image
-recognition example might use a percentage of accurate
-classifications. Other fields may have established testing benchmarks.
+We consider several evaluation metrics. First, we will use output from the analytics component of the platform to understand and validate the performance of the real-time scheduling algorithm. Specifically, we compare end-to-end latency produced from the chain of services scheduled in multicore computers against the algorithm’s predicted latency. We plan to set an appropriate significance level in order to set a benchmark for acceptable latency performance. Since the algorithm schedules services in real-time based on the service’s functional requirements (in latency), we will validate how the algorithm performs given a wide range of functional requirements.
 
-No matter the case, you need to prove you have contributed to the
-field. This will be easier for some than others. In particular, those
-with `sensory' projects involving visual or sonic elements need to
-think this point through -- objective measures are always better than
-subjective ones.
+	Second, when building this platform, it is important to consider how much overhead our system adds to the providing services. If our system’s design plays a significant factor in increasing end-to-end latency, then the software and design of our platform must be optimized to minimize unnecessary and significant overhead. In the next few weeks of designing our platform, we plan to define an acceptable measure of overhead. One obvious constraint to this measure is that the added overhead should not increase the end-to-end latency of the services to more than the latency requirement imposed by clients. 
+	
+	Lastly, we evaluate our platform based on its scalability. As mentioned above, we plan on building this testing platform on 4 multi-core computers that will simulate servers. When talking about the scalability of this system, we need to ensure that the system is able to steadily and efficiently handle large incoming traffic (substantial packets/second) as well as deal with strict functional requirements on the system.
+
 
 \section{Research Timeline}
 \label{sec:research_timeline}
-Finally, we would like you to speculate about the pace of your
-research progress. This section need not be lengthy, we would just
-like you to specify some milestones so we can gauge your progress
-during our intermediate interviews. Let us follow through with our
-image recognition example:
+As there is already a research group working on this subject, we will spend the first few weeks understanding the progress that has already been made by the group. Since this project involves a good deal of development, we will also spend this time on determining a set of frameworks and tools for the project. Since tools such as RT-Xen have already been used by the research group, it will be up to our senior design group to gain familiarity of these tools. This background work should be mostly completed by Thanksgiving break.
 
-% The 'itemize' environment shown here, and its friend 'enumerate'
-% (shown below), are used to create indented\bulleted\outline style
-% lists.
-\begin{itemize*}
-	\item {\sc already completed}: Preliminary reading. Began implementation of image-recognition algorithm.\vspace{3pt}
-	\item {\sc prior-to thanksgiving} : Photograph buildings for DB. Make algorithm more efficient, tune parameters.\vspace{3pt}
-	\item {\sc prior-to christmas} : Create server-MMS interface. Expand tagged DB collection.\vspace{3pt}
-	\item {\sc completion tasks} : Verify implementation is bug-free. Conduct accuracy testing. Complete write-up.\vspace{3pt}
-	\item {\sc if there's time} : Investigate image pre-processing techniques to improve accuracy.
-\end{itemize*}
+By Winter break, we will specify all the components and begin developing and testing each. We will also begin connecting components in an environment such as AWS EC2. Although performance metrics are unreliable as we are not in full control of the environment, this will allow us to make sure things are working as smoothly as possible.
+
+Early in the spring semester, we will begin installing the components on the physical machines and begin collecting preliminary benchmarks. We will collect our first metrics by February and identify bottlenecks and architectural issues.
+
+The rest of the year will be spent iterating on the system and performing trials with different resource management algorithms and analyzing the results. By this point we should have enough understanding of the algorithms that we can propose improvements to resource management.
+
+As time permits, we will build an analytics dashboard for monitoring performance in real time for further insight, and contribute back to the open source tools that we used during our research.
 
 % We next move onto the bibliography.
 \bibliographystyle{plain} % Please do not change the bib-style

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  1 OCT 2014 19:51
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  1 OCT 2014 20:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -265,23 +265,43 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 36.
+LaTeX Font Info:    Try loading font information for U+msa on input line 37.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 36.
+LaTeX Font Info:    Try loading font information for U+msb on input line 37.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 36.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 37.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Overfull \hbox (176.39996pt too wide) in paragraph at lines 36--36
- [][][][][] 
+Overfull \hbox (8.62248pt too wide) in paragraph at lines 37--37
+ []\eaddfnt brashear@seas.upenn.edu 
+ []
+
+
+Overfull \hbox (8.62248pt too wide) in paragraph at lines 37--37
+ []\eaddfnt brashear@seas.upenn.edu 
+ []
+
+
+Overfull \hbox (8.62248pt too wide) in paragraph at lines 37--37
+ []\eaddfnt brashear@seas.upenn.edu 
+ []
+
+
+Overfull \hbox (8.62248pt too wide) in paragraph at lines 37--37
+ []\eaddfnt brashear@seas.upenn.edu 
+ []
+
+
+Overfull \hbox (83.19995pt too wide) in paragraph at lines 37--37
+ [][][][][][] 
  []
 
 
@@ -291,23 +311,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
+Overfull \hbox (15.1183pt too wide) in paragraph at lines 79--80
+\T1/aer/m/n/9 Rout-ing [5] and Real-Time Multi-Core Vir-tual Ma-chine Schedul-
+ []
 
-LaTeX Warning: Citation `ivanov14' on page \thepage  undefined on input line 88
-.
-
-
-LaTeX Warning: Citation `latex_wikibook' on page \thepage  undefined on input l
-ine 89.
-
-
-LaTeX Warning: Citation `ctan_pdf' on page \thepage  undefined on input line 89
-.
-
+[2]
 No file prop_spec.bbl.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
+[3]
 Package epstopdf Info: Source file: <some_graph.eps>
 (epstopdf)                    date: 2014-08-17 17:06:40
 (epstopdf)                    size: 119685 bytes
@@ -316,28 +326,27 @@ Package epstopdf Info: Source file: <some_graph.eps>
 (epstopdf)                    size: 37153 bytes
 (epstopdf)             Command: <repstopdf --outfile=some_graph-eps-converted-t
 o.pdf some_graph.eps>
-(epstopdf)             \includegraphics on input line 287.
+(epstopdf)             \includegraphics on input line 240.
 Package epstopdf Info: Output file is already uptodate.
-
-<some_graph-eps-converted-to.pdf, id=20, 330.23375pt x 235.88126pt>
+ <some_graph-eps-converted-to.pdf, id=21, 330.23375pt x 235.88126pt>
 File: some_graph-eps-converted-to.pdf Graphic file (type pdf)
 
 <use some_graph-eps-converted-to.pdf>
-Package pdftex.def Info: some_graph-eps-converted-to.pdf used on input line 287
+Package pdftex.def Info: some_graph-eps-converted-to.pdf used on input line 240
 .
 (pdftex.def)             Requested size: 180.0pt x 128.57613pt.
- [3
+ [4
 
  <./some_graph-eps-converted-to.pdf>]
 (./prop_spec.aux) ) 
 Here is how much of TeX's memory you used:
- 2909 strings out of 493315
- 37068 string characters out of 6137904
+ 2906 strings out of 493315
+ 37032 string characters out of 6137904
  103407 words of memory out of 5000000
- 6268 multiletter control sequences out of 15000+600000
+ 6265 multiletter control sequences out of 15000+600000
  52404 words of font info for 72 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,10n,28p,1697b,265s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,10n,28p,1697b,267s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.
 enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pf
 b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pf
@@ -347,15 +356,14 @@ fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></
 usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
 /local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/l
-ocal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/loc
-al/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local
-/texlive/2013/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texliv
-e/2013/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/
-texmf-dist/fonts/type1/urw/times/utmb8a.pfb>
-Output written on prop_spec.pdf (3 pages, 193022 bytes).
+ocal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/loc
+al/texlive/2013/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texl
+ive/2013/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
+3/texmf-dist/fonts/type1/urw/times/utmb8a.pfb>
+Output written on prop_spec.pdf (4 pages, 186972 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 70 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
