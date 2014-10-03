@@ -1,4 +1,3 @@
-
 % Many thanks to Andrew West for writing most of this file
 % Main LaTeX file for CIS400/401 Project Proposal Specification
 %
@@ -18,6 +17,7 @@
 % styles and formattings that aren't part of the 'standard library'
 \usepackage{mdwlist}
 \usepackage{url}
+\usepackage{graphics}
 
 \begin{document}
 
@@ -41,10 +41,19 @@ Philadelphia, PA \\
 % Next we write out our abstract -- generally a two paragraph maximum,
 % executive summary of the motivation and contributions of the work.
 \begin{abstract}
-  \textit{Network Functions Virtualization (NFV) is an approach to implementing network infrastructure that emerged in 2012. NFV aims to address the inflexibility of classical network hardware by leveraging virtualization technology to consolidate network equipment onto industry standard servers. To date, several reports have demonstrated the feasibility of virtualizing network functions. (cite) In order for NFV to succeed in practice, it is desirable for virtualized network systems to be able to meet real-time deadlines. To that end, Professor Linh Phan and her research group at Penn have developed algorithms to manage computing and network resources to implement virtualized network functions given real-time constraints.}
+ \textit{Network Functions Virtualization (NFV) is an approach to implementing network infrastructure that emerged in 2012. NFV aims to address the inflexibility of classical network hardware by leveraging virtualization technology to consolidate network equipment onto industry standard servers. To date, several reports have demonstrated the feasibility of virtualizing network functions. (cite) In order for NFV to succeed in practice, it is desirable for virtualized network systems to be able to meet real-time deadlines. To that end, Professor Linh Phan and her research group at Penn have developed algorithms to manage computing and network resources to implement virtualized network functions given real-time constraints.}
 
-  \textit{One application of real-time NFV is to provide network services that meet end-to-end latency requirements. In this project, we propose to design and implement a testing platform that simulates a service provider that, given an algorithm for research management, provides services meeting real-time constraints. In doing so, the platform can evaluate the effectiveness of the resource management algorithm. We will perform trials to collect metrics to analyze and eventually improve the real-time scheduling algorithms. The testing platform will consist of an orchestration layer and a cluster of computers that provide computing and networking resources. This system will enable the evaluation of the algorithms and aid in the development of future algorithms for implementing network functions subject to time constraints.}
+ \textit{One application of real-time NFV is to provide network services that meet end-to-end latency requirements. In this project, we propose to design and implement a testing platform that simulates a service provider that, given an algorithm for research management, provides services meeting real-time constraints. In doing so, the platform can evaluate the effectiveness of the resource management algorithm. We will perform trials to collect metrics to analyze and eventually improve the real-time scheduling algorithms. The testing platform will consist of an orchestration layer and a cluster of computers that provide computing and networking resources. This system will enable the evaluation of the algorithms and aid in the development of future algorithms for implementing network functions subject to time constraints.}
 \end{abstract}
+
+\begin{figure*}[htb!]
+ \begin{center}
+   \includegraphics[width=16cm]{service_provider}
+ \end{center}
+ \vspace{-12pt}
+ \caption{A block-flow diagram of the core components of the service provider}
+ \label{fig:some_graph}
+\end{figure*}
 
 % Then we proceed into the body of the report itself. The effect of
 % the 'section' command is obvious, but also notice 'label'. Its good
@@ -65,16 +74,6 @@ Currently, no analysis platform exists to evaluate effective resource management
 % The header of this document might have been a little intimidatating
 % to beginners. Notice once you are in the body of the document,
 % however, LaTeX commands are minimal and 'normal text' is frequent.
-
-
-\begin{figure*}[htb!]
-  \begin{center}
-    \includegraphics[width=16cm]{service_provider}
-  \end{center}
-  \vspace{-12pt}
-  \caption{Example Figure/Graph}
-  \label{fig:some_graph}
-\end{figure*}
 
 
 \section{Related Work}
@@ -103,26 +102,35 @@ Our group will develop software to configure a cluster of computers to act as a 
 
 The service provider that we will be building to test the algorithms will consist of two major components: an orchestration layer and the hardware that provides computing and networking resources. The orchestration layer consists of a state manager, request handler, algorithm solver, and analytics monitor. The hardware consists of high-volume servers which host virtual machines and network switches which allow the machines to send and receive data.
 
-The state manager will keep track of the computing fleet in terms of the software configuration and activity on each computer. When changes need to be made to the fleet, the state manager will put them into effect by creating, modifying or destroying virtual computers.
+The state manager will keep track of the computing fleet in terms of the software configuration and activity on each computer. When changes need to be made to the fleet, the state manager will put them into effect by creating, modifying or destroying virtual machines.
 
-The request handler will connect to the outside network and handle requests for services that specify functionality and performance requirements of the services. Depending on the service provider's capacity and usage, requests for services can either be accepted or rejected.
+The request handler will expose an API to handle requests for services that specify functionality and performance requirements of the services. Depending on the service provider's capacity and usage, requests for services can either be accepted or rejected.
 
 The algorithm solver will solve for resource management strategies given the customer requirements and the state of the fleet. The algorithm used by the solver can be switched out to evaluate different resource management algorithms across separate trials. The algorithm solver communicates with the state manager to enact the strategies it produces.
 
-The analytics component will track of how the system is performing over time and if it is meeting the requirements imposed by the customers. Once a trial has finished, the analytics component will quantitatively evaluate the resource management algorithms for review by the researchers.
+The analytics component will track of how the system is performing over time and if it is meeting the requirements imposed by the customers. Once a trial has finished, this information will be used to generate a quantitative report of the resource management algorithms.
 
 The hardware will be provided by Professor Phan's research group as four 32-core computers and network switches to connect them.
 
-Trials will start with orchestration layer running and only the base hypervisor installed on the computing hardware. Simulated customers will begin to make requests with information about the accepted services, the acceptable latency (e.g. 20 ms), and the amount of data they will send (e.g. 100 mb at 1 mb / second). The request handler will accept or reject the requests. Once a request has been accepted, the customer will begin sending data and performance analytics will be collected by the service provider. When a trial is over, a report of the algorithm's performance over that trial will be generated.
+Trials will start with orchestration layer running and only the base hypervisor installed on the computing hardware. Simulated customers will begin to make requests with information about the desired services, the acceptable latency (e.g. 20 ms), and the amount of data they will send (e.g. 100 mb at 1 mb / second). The request handler will accept or reject the requests. Once a request has been accepted, the customer will begin sending data to be processed and performance analytics will be collected by the service provider. When a trial is over, a report of the algorithm's performance over that trial will be generated.
 
-
+\begin{figure}[htb!]
+ \begin{flushleft}
+   \includegraphics[width=9cm]{system}
+ \end{flushleft}
+ \vspace{-12pt}
+ \caption{A high level illustration of interaction client between service provider}
+ \label{fig:some_graph}
+\end{figure}
 
 \subsection{Technical Challenges}
 \label{subsec:tech_challenges}
 
-The nature of Network Function Virtualization requires the deliberate integration of complex hardware and software. This design complicates latency constraint handling because CPU resources and network resources must be managed simultaneously. A major design challenge in lieu of meeting real-time end-to-end latency guarantees is optimizing and measuring both processor- and network-sourced latencies. In order to achieve minimal end-to-end latency, our design will need to a) minimize the overhead of critical functions, and b) keep non-critical functions off of the critical path.
+The nature of Network Function Virtualization requires the integration of complex hardware and software. This design complicates latency constraint handling because CPU resources and network resources must be managed simultaneously. A major design challenge in lieu of meeting real-time end-to-end latency guarantees is optimizing and measuring both processor- and network-sourced latencies. In order to achieve minimal end-to-end latency, our design will need to a) minimize the overhead of critical functions, and b) keep non-critical functions off of the critical path.
 
-A related design challenge is achieving repeatable test results so that algorithms may be analyzed and compared to one another. In order to accomplish this, the system must also provide consistent latency. Our design also presents additional challenges including maintaining overall system reliability and recovering from failures in either hardware (such as internal network switches) or software (such as virtual machine) components.
+A related design challenge is achieving repeatable test results so that algorithms may be analyzed and compared to one another. In order to accomplish this, the system must also provide consistent latency. Our design also presents additional challenges including maintaining overall system reliability and recovering from the failure of individual components.
+
+Finally, in order to provide a useful evaluation of the algorithm, the entire system has to be realistic. The service provider should consistently handle customer requests and traffic without mistakes. The trials should involve a variety of scenarios that will allow for the understanding of all facets of the resource management algorithm.
 
 \subsection{Evaluation Criteria}
 \label{subsec:eval_criteria}
@@ -193,15 +201,7 @@ As time permits, we will build an analytics dashboard for monitoring performance
 % that LaTeX plays nice with. Then we just scale it as
 % a % of the column width.
 
-
-\begin{figure}[htb!]
-  \begin{center}
-    \includegraphics[width=12cm]{system}
-  \end{center}
-  \vspace{-12pt}
-  \caption{Example Figure/Graph}
-  \label{fig:some_graph}
-\end{figure}
-
 \end{document}
+
+
 
